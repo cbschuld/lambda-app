@@ -1,0 +1,63 @@
+{
+  "version": "2.0",
+  "routeKey": "GET /",
+  "rawPath": "/",
+  "rawQueryString": "",
+  "headers": {
+    "accept": "application/json, text/plain, */*",
+    "accept-encoding": "gzip, deflate, br",
+    "accept-language": "en-US,en;q=0.5",
+    "authorization": "Bearer eyJraWQiOiJvSlwvZUdxQVlcL09FeWx3KzQ2cW03RXdSN0hrZVNya1pNWWE0UVZJUTVxbWc9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIyMDVhZWYyOS00N2U0LTQ4N2MtOWI3Ny01YjUyYmUwM2YxZGIiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtd2VzdC0yLmFtYXpvbmF3cy5jb21cL3VzLXdlc3QtMl9Ka0ZCWlR4Z1IiLCJjdXN0b206dWlkIjoiQ013VkR4ODQ0Sk1zZk5nQUxMTFg1MSIsImNvZ25pdG86dXNlcm5hbWUiOiIyMDVhZWYyOS00N2U0LTQ4N2MtOWI3Ny01YjUyYmUwM2YxZGIiLCJvcmlnaW5fanRpIjoiZjc4MWE1NDctMzliOS00MzA3LTgxYjMtNWEzN2VhMWRkNmY0IiwiYXVkIjoiNDNwOTRjbGgyY2Q0NnVhajJqZXUxcXVucmgiLCJldmVudF9pZCI6ImYwNGVjYWU1LWU3MDUtNGNkNy1hZDhhLTdhN2RlNDZhYmM1NiIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNjU2ODgyNjg5LCJleHAiOjE2NTY4ODYyODksImlhdCI6MTY1Njg4MjY4OSwianRpIjoiMzg5Y2M3YjctYmU0OC00NzMzLWJmYjQtYTEzNTZkZjIwZGFiIiwiZW1haWwiOiJjYnNjaHVsZEBnbWFpbC5jb20ifQ.knv5XmootrMP9uGTVeLlVRE1roEI1C4grSlbVnZ_bZnocAN0Q5P50VHjtYBX7aswXamZtzwvkvbbOM_8lKJ_wAd8MkTSDxrp4fH2IjwYs4AkPBEGKZnbHh5dN9G8S2yESYrlRlzoTQWyyZet1H_s0xPL9qf-GSGsEKrfwFkZLxDHfuUownRGOForbY08GltiO8DcY6VX59bFLF_-sjbVu1gopyrre9rcI6EuKopdpVPT5Z1JvmjEnWgDm0xZpJztgmLoyppfBMfO421Ld2PIETXT9WFspCskCdVw0rHBzGsGACK8A62DppckMKubQcKQFwJPdv8-SM0Gtpk1-NpdjA",
+    "content-length": "0",
+    "host": "dev.domain.com",
+    "origin": "https://dev.domain.com",
+    "referer": "https://dev.domain.com/",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
+    "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0) Gecko/20100101 Firefox/102.0",
+    "x-amzn-trace-id": "Root=1-62c20602-59ff4ab7607d153b6ce0bb4b",
+    "x-forwarded-for": "160.2.41.159",
+    "x-forwarded-port": "443",
+    "x-forwarded-proto": "https"
+  },
+  "requestContext": {
+    "accountId": "196071163234",
+    "apiId": "q65hximjh4",
+    "authorizer": {
+      "jwt": {
+        "claims": {
+          "aud": "43p94clh2ca46baj2jeu1qunrh",
+          "auth_time": "1656882689",
+          "cognito:username": "205f2f29-47e4-487c-9b77-5b52be03f1db",
+          "custom:uid": "CMwVDx842JMsfNgALLLX51",
+          "email": "cbschuld@gmail.com",
+          "event_id": "f04ecae5-e705-4cd7-ad8a-7a7de46abc56",
+          "exp": "1656886289",
+          "iat": "1656882689",
+          "iss": "https://cognito-idp.us-west-2.amazonaws.com/us-west-2_JK2BZTxgR",
+          "jti": "389cc7b7-be48-4712-bfb5-a1356df20dab",
+          "origin_jti": "f781a547-19b8-4307-81b3-5c37ea1dd6f4",
+          "sub": "205aef29-44e4-487b-9a77-5b52be03f1db",
+          "token_use": "id"
+        },
+        "scopes": null
+      }
+    },
+    "domainName": "domain.com",
+    "domainPrefix": "dev",
+    "http": {
+      "method": "GET",
+      "path": "/v1/me",
+      "protocol": "HTTP/1.1",
+      "sourceIp": "192.168.100.100",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0) Gecko/20100101 Firefox/102.0"
+    },
+    "requestId": "UtXgacB9P2cESMQ=",
+    "routeKey": "GET /v1/me",
+    "stage": "$default",
+    "time": "03/Jul/2022:21:11:30 +0000",
+    "timeEpoch": 1656882690594
+  },
+  "isBase64Encoded": false
+}
