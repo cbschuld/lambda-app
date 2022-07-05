@@ -41,8 +41,10 @@
           "sub": "205aef29-44e4-487b-9a77-5b52be03f1db",
           "token_use": "id"
         },
-        "scopes": null
-      }
+        "scopes": []
+      },
+      "principalId": "",
+      "integrationLatency": 0
     },
     "domainName": "domain.com",
     "domainPrefix": "dev",

@@ -1,16 +1,16 @@
-import {AppLoggerInterface} from './'
+import { AppLoggerInterface } from './'
 
 export default class AppLogger implements AppLoggerInterface {
-  info(message:string) {
-    console.log(message)
+  info(message: string) {
+    console.info(message)
   }
-  error(message:string) {
+  error(message: string) {
     console.error(message)
   }
-  debug(message:string) {
+  debug(message: string) {
     console.debug(message)
   }
-  warn(message:string) {
+  warn(message: string) {
     console.warn(message)
   }
 }

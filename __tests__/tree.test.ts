@@ -3,16 +3,9 @@
 import LambdaApp from '../src/index'
 import Log from 'lambda-tree'
 
-import {
-  APIGatewayEventRequestContextV2,
-  APIGatewayProxyEventV2WithRequestContext
-} from 'aws-lambda/trigger/api-gateway-proxy'
+import { APIGatewayProxyEventV2 } from 'aws-lambda/trigger/api-gateway-proxy'
 
-class MyApp extends LambdaApp<
-  null,
-  APIGatewayEventRequestContextV2,
-  APIGatewayProxyEventV2WithRequestContext<APIGatewayEventRequestContextV2>
-> {
+class MyApp extends LambdaApp<null, APIGatewayProxyEventV2> {
   constructor() {
     super()
     this.log = new Log()

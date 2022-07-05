@@ -1,8 +1,4 @@
-import {
-  APIGatewayEventRequestContextV2,
-  APIGatewayProxyEventV2WithRequestContext,
-  APIGatewayProxyStructuredResultV2
-} from 'aws-lambda/trigger/api-gateway-proxy'
+import { APIGatewayProxyEventV2, APIGatewayProxyStructuredResultV2 } from 'aws-lambda/trigger/api-gateway-proxy'
 import { Context } from 'aws-lambda/handler'
 import { encode } from 'uuid-base58'
 
@@ -31,18 +27,23 @@ export interface AppLoggerInterface {
   warn: (message: string) => void
 }
 
-export interface ApplicationInitOptions {
+export type LoadIdentity<TEvent, TAppIdentity> =
+  | ((event: TEvent, context: Context) => Promise<TAppIdentity>)
+  | undefined
+
+export interface ApplicationInitOptions<TEvent, TAppIdentity> {
   /**
    * authorize the user when they init, DEFAULT is true
    */
   authorize?: boolean
   accessControlAllowOrigin?: string
+  onLoadIdentity?: LoadIdentity<TEvent, TAppIdentity>
 }
 
-export interface ApplicationInitRequest<TEvent> {
+export interface ApplicationInitRequest<TEvent, TAppIdentity> {
   event: TEvent
   context: Context
-  options?: ApplicationInitOptions
+  options?: ApplicationInitOptions<TEvent, TAppIdentity>
 }
 
 export interface AppContext {
@@ -52,12 +53,8 @@ export interface AppContext {
   sourceIp: string
 }
 
-export default class LambdaApp<
-  AppIdentity,
-  TRequestContext extends APIGatewayEventRequestContextV2,
-  TEvent extends APIGatewayProxyEventV2WithRequestContext<TRequestContext>
-> {
-  private _options: ApplicationInitOptions | null = null
+export default class LambdaApp<TAppIdentity, TEvent extends APIGatewayProxyEventV2> {
+  private _options: ApplicationInitOptions<TEvent, TAppIdentity> | null = null
   private _log: AppLoggerInterface | null = null
   private _context: AppContext = {
     awsRequestId: '',
@@ -65,7 +62,7 @@ export default class LambdaApp<
     userAgent: '',
     sourceIp: ''
   }
-  private _identity: AppIdentity = {} as AppIdentity
+  private _identity: TAppIdentity = {} as TAppIdentity
   private _error: Error | null = null
   private _startTime: number = new Date().getTime()
 
@@ -80,10 +77,11 @@ export default class LambdaApp<
     this._error = e
   }
 
-  private getDefaultInitOptions(): ApplicationInitOptions {
+  private getDefaultInitOptions(): ApplicationInitOptions<TEvent, TAppIdentity> {
     return {
       authorize: true,
-      accessControlAllowOrigin: '*'
+      accessControlAllowOrigin: '*',
+      onLoadIdentity: undefined
     }
   }
 
@@ -121,7 +119,7 @@ export default class LambdaApp<
     }
   }
 
-  public get options(): ApplicationInitOptions {
+  public get options(): ApplicationInitOptions<TEvent, TAppIdentity> {
     return this._options || this.getDefaultInitOptions()
   }
 
@@ -129,15 +127,19 @@ export default class LambdaApp<
    * example context type might be APIGatewayProxyEventV2WithJWTAuthorizer
    * @returns
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public async onLoadIdentity(requestContext: TRequestContext): Promise<AppIdentity> {
-    return {} as AppIdentity
-  }
 
-  public get identity(): AppIdentity {
+  // public async onLoadIdentity(requestContext: TEvent['requestContext']): Promise<TAppIdentity> {
+  //   return {} as TAppIdentity
+  // }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // public onLoadIdentity: (requestContext: TEvent['requestContext']) => Promise<TAppIdentity> = (_requestContext) => {
+  //   return Promise.resolve({} as TAppIdentity)
+  // }
+
+  public get identity(): TAppIdentity {
     return this._identity
   }
-  public set identity(i: AppIdentity) {
+  public set identity(i: TAppIdentity) {
     this._identity = i
   }
   public get context(): AppContext {
@@ -148,22 +150,35 @@ export default class LambdaApp<
     event,
     context,
     options
-  }: ApplicationInitRequest<TEvent>): Promise<LambdaApp<AppIdentity, TRequestContext, TEvent>> {
-    this._options = { ...this.getDefaultInitOptions(), ...options }
+  }: ApplicationInitRequest<TEvent, TAppIdentity>): Promise<LambdaApp<TAppIdentity, TEvent>> {
+    this._options = { ...this.getDefaultInitOptions(), ...this._options, ...options }
     this._context = this.getInitialAppContext(event, context)
 
-    if (this.options.authorize) {
-      return await this.onLoadIdentity(event.requestContext)
+    // assert(
+    //   this._options.authorize && !this._options.onLoadIdentity,
+    //   'onLoadIdentity must be defined if authorize is true'
+    // )
+
+    if (this._options.authorize && this._options.onLoadIdentity !== undefined) {
+      return await this._options
+        .onLoadIdentity(event, context)
         .then((identity) => {
           this._identity = identity
-          return this
+          return Promise.resolve(this)
         })
         .catch((error) => {
-          this.error = error
-          return this
+          this._error = error
+          return Promise.reject(this)
         })
     }
     return Promise.resolve(this)
+  }
+
+  public set onLoadIdentity(v: LoadIdentity<TEvent, TAppIdentity>) {
+    if (this._options === null) {
+      this._options = this.getDefaultInitOptions()
+    }
+    this._options.onLoadIdentity = v
   }
 
   private jsonResponse(httpStatus: number, json: Record<string, any>): APIGatewayProxyStructuredResultV2 {

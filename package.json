@@ -25,12 +25,12 @@
     "url": "git+https://github.com/cbschuld/lambda-app.git"
   },
   "keywords": [
-    "log",
-    "logging",
-    "logger",
-    "logs",
     "lambda",
-    "lambda logging"
+    "serverless",
+    "initialization",
+    "bootstrap",
+    "logging",
+    "http response"
   ],
   "author": "Chris Schuld <cbschuld@gmail.com>",
   "license": "MIT",
