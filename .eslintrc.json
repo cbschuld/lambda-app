@@ -1,6 +1,9 @@
+// .eslintrc
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint/eslint-plugin"],
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"]
+  "plugins": ["@typescript-eslint"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  "ignorePatterns": ["/lib/**/*"],
+  "rules": {}
 }

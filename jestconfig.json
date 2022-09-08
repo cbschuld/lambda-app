@@ -1,1 +1,7 @@
-{ "preset": "ts-jest", "testEnvironment": "node", "collectCoverage": true }
+{
+  "preset": "ts-jest",
+  "testEnvironment": "node",
+  "collectCoverage": true,
+  "testRegex": "/__tests__/.*\\.test\\.(jsx?|tsx?)$",
+  "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
+}

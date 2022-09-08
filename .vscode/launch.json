@@ -4,7 +4,7 @@
     {
       "name": "Debug tests",
       "request": "launch",
-      "runtimeArgs": ["run-script", "test"],
+      "runtimeArgs": ["run-script", "test", "context"],
       "runtimeExecutable": "npm",
       "skipFiles": ["<node_internals>/**"],
       "type": "pwa-node",

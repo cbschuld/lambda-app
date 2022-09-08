@@ -1,17 +1,17 @@
 import LambdaApp, { HttpStatus } from '../src/index'
-import AppLogger from '../src/AppLogger'
 import { APIGatewayProxyEventV2 } from 'aws-lambda/trigger/api-gateway-proxy'
+import event from './data/APIGatewayProxyEventV2WithJWTAuthorizer.json'
+import contextV1 from './data/Context.json'
+import { MyAppWithUser } from './types'
+import { Context } from 'aws-lambda/handler'
 
-class MyApp extends LambdaApp<null, APIGatewayProxyEventV2> {
-  constructor() {
-    super()
-    this.log = new AppLogger()
-  }
-}
+const context: Context = contextV1 as Context
+
+class MyApp extends LambdaApp<APIGatewayProxyEventV2> {}
 
 const app = new MyApp()
 
-describe('testing logging capability', () => {
+describe('testing response capability', () => {
   test('test OK = 200', () => {
     const response = app.response(HttpStatus.OK, { message: 'OK' })
     expect(response.statusCode).toBe(200)
@@ -71,5 +71,19 @@ describe('testing logging capability', () => {
   test('test GatewayTimeout = 504', () => {
     const response = app.response(HttpStatus.GatewayTimeout, { message: 'OK' })
     expect(response.statusCode).toBe(504)
+  })
+  describe('testing response with identity', () => {
+    test('context dump', async () => {
+      new MyAppWithUser().init({ event, context, options: { authorize: true } }).then((app) => {
+        expect(app.identity.user.id).toBe(event.requestContext.requestId)
+        expect(app.identity.user.first).toBe('John')
+        expect(app.identity.user.last).toBe('Doe')
+        expect(app.identity.company).toBe('Acme')
+        expect(app.identity.office).toBe('New York')
+
+        const response = app.response(HttpStatus.OK, { message: 'OK' })
+        expect(response.statusCode).toBe(200)
+      })
+    })
   })
 })

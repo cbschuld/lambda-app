@@ -1,7 +1,7 @@
 import { Context } from 'aws-lambda/handler'
 import LambdaApp, { HttpStatus } from '../src/index'
-import event from './APIGatewayProxyEventV2WithJWTAuthorizer.json'
-import contextV1 from './Context.json'
+import event from './data/APIGatewayProxyEventV2WithJWTAuthorizer.json'
+import contextV1 from './data/Context.json'
 
 const context: Context = contextV1 as Context
 
@@ -33,10 +33,6 @@ describe('testing initialization', () => {
             statusCode: 200
           })
         )
-        // expect.objectContaining()
-        // expect(response.statusCode).toBe(200)
-        // expect(response.headers).toBeDefined()
-        // expect(response?.headers['Access-Control-Allow-Origin']).toBe('localhost')
       })
   })
 })

@@ -1,16 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 
 import LambdaApp from '../src/index'
-import Log from 'lambda-tree'
 
-import { APIGatewayProxyEventV2 } from 'aws-lambda/trigger/api-gateway-proxy'
-
-class MyApp extends LambdaApp<null, APIGatewayProxyEventV2> {
-  constructor() {
-    super()
-    this.log = new Log()
-  }
-}
+class MyApp extends LambdaApp {}
 
 const app = new MyApp()
 

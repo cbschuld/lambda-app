@@ -1,7 +1,6 @@
 src
 tsconfig.json
 tsconfig-cjs.json
-tslint.json
 .prettierrc
 .prettierrc.json
 .eslintrc.json

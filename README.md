@@ -1,6 +1,6 @@
 # Lambda App - Opinionated Lambda App Initialization, Management and Response System
 
-A simplistic and fairly opinionated way to initialize a lambda-based application on AWS, log consistently to CloudWatch and respond to requests from users. The Lambda App system is designed to help minimize app-start and app-response code in serverless applications both through frameworks like serverless.com or the AWS CDK.
+A simplistic and opinionated way to initialize a lambda-based application on AWS, log consistently to CloudWatch and respond to requests from users. The Lambda App system is designed to help minimize app-start and app-response code in serverless applications both through frameworks like serverless.com or the AWS CDK.
 
 ## Example Usage
 
